@@ -3,15 +3,16 @@ import {
   DesktopOutlined,
   FileOutlined,
   HomeFilled,
+  InfoCircleFilled,
   PieChartOutlined,
+  PlusCircleFilled,
+  ProductFilled,
   TeamOutlined,
   UserOutlined,
 } from '@ant-design/icons';
 import { Breadcrumb, Layout, Menu, theme } from 'antd';
 import { Link, Outlet } from 'react-router-dom';
-
 const { Header, Content, Footer, Sider } = Layout;
-
 function getItem(label, key, icon, children) {
   return {
     key,
@@ -21,20 +22,20 @@ function getItem(label, key, icon, children) {
   };
 }
 const items = [
-  getItem(<Link to="/">Головна</Link>, '1', <HomeFilled />),
-  getItem(<Link to="/Football">Футбол</Link>, '2', <DesktopOutlined />),
-  getItem(<Link to="/Basketball">Баскетбол</Link>, '3', <DesktopOutlined />),
+  getItem('Home', '1', <HomeFilled/>),
+  getItem('Products', '2', <ProductFilled />),
+  getItem('About', '3', <InfoCircleFilled />),
   getItem('User', 'sub1', <UserOutlined />, [
     getItem('Tom', '3'),
     getItem('Bill', '4'),
     getItem('Alex', '5'),
   ]),
-  getItem('Team', 'sub2', <TeamOutlined />, [getItem('Team 1', '6'), getItem('Team 2', '8')]),
-  getItem('Files', '9', <FileOutlined />),
+  
 ];
 
 const AppLayout = () => {
 
+  
   const [collapsed, setCollapsed] = useState(false);
   const {
     token: { colorBgContainer, borderRadiusLG },
@@ -48,8 +49,35 @@ const AppLayout = () => {
       <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
         <div className="demo-logo-vertical" />
 
-        <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" items={items} />
-
+        <Menu 
+        theme="dark" 
+        defaultSelectedKeys={['1']} 
+        mode="inline" 
+        // items={items} />
+        items={[
+          {
+            key: '1',
+            icon: <HomeFilled/>,
+            label: <Link to="/">Головна</Link>
+          },
+          {
+            key: '2',
+            icon: <ProductFilled/>,
+            label: <Link to="/Products">Products</Link>
+          },
+          {
+            key: '3',
+            icon: <PlusCircleFilled/>,
+            label: <Link to="/create">Create Product</Link>
+          },
+          {
+            key: '4',
+            icon: <InfoCircleFilled/>,
+            label: <Link to="/about">About</Link>
+          },
+        
+      ]}
+      />
       </Sider>
 
       <Layout>
@@ -64,14 +92,22 @@ const AppLayout = () => {
             margin: '0 16px',
           }}
         >
+            <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
           <Breadcrumb
             style={{
-              margin: '16px 0',
+              margin: 'px 0',
             }}
           >
-            <Breadcrumb.Item>User</Breadcrumb.Item>
-            <Breadcrumb.Item>Bill</Breadcrumb.Item>
+          
+            <Breadcrumb.Item>СТАВКИ НА СПОРТ</Breadcrumb.Item>
+       
           </Breadcrumb>
+          </div>
           <div
             style={{
               padding: 24,
@@ -80,7 +116,7 @@ const AppLayout = () => {
               borderRadius: borderRadiusLG,
             }}
           >
-            <Outlet/>
+           <Outlet/>
           </div>
         </Content>
         <Footer
